@@ -9,7 +9,7 @@ public class PlayerInterface : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        UpdateHealthDisplay(0);
+        UpdateHealthDisplay(3);
     }
 
 

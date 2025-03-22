@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 3.0f;
     public float jumpSpeed = 7.0f;
     Vector3 respawnPos;
+    public Health playerHealth;
 
     // Start is called before the first frame update
     void Start()
@@ -42,15 +43,9 @@ public class PlayerMovement : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision) {
         Debug.Log("Hit object named: " + collision.gameObject.name);
 
-        if (collision.gameObject.CompareTag("Enemy")) {
-
-            if (rb.velocity.y < 0) {
-                Destroy(collision.gameObject);
-                rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
-            }
-            else {
-                transform.position = respawnPos;
-            }
+        if (collision.gameObject.CompareTag("Enemy")) 
+        {
+            playerHealth.TakeDamage(1);
         }
     }
 }
