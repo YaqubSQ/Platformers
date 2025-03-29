@@ -9,6 +9,7 @@ public class PlayerMovement : MonoBehaviour
     public float moveSpeed = 3.0f;
     public float jumpSpeed = 7.0f;
     Vector3 respawnPos;
+    public Health playerHealth;
 
     bool inAir;
 
@@ -24,7 +25,8 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 movement = rb.velocity;
 
-        if (Input.GetKey(KeyCode.RightArrow)) {
+        if (Input.GetKey(KeyCode.RightArrow)) 
+        {
             movement.x = moveSpeed;
             GetComponent<SpriteRenderer>().flipX = false;
 
@@ -34,7 +36,8 @@ public class PlayerMovement : MonoBehaviour
             }
             
         }
-        else if (Input.GetKey(KeyCode.LeftArrow)) {
+        else if (Input.GetKey(KeyCode.LeftArrow)) 
+        {
             movement.x = -moveSpeed;
             GetComponent<SpriteRenderer>().flipX = true;
             if (inAir == false)
@@ -42,7 +45,8 @@ public class PlayerMovement : MonoBehaviour
                 GetComponent<Animator>().SetBool("running", true);
             }
         }
-        else {
+        else 
+        {
             movement.x = 0;
             GetComponent<Animator>().SetBool("running", false);
         }
@@ -56,21 +60,30 @@ public class PlayerMovement : MonoBehaviour
         rb.velocity = movement;
     }
 
-    private void OnCollisionEnter2D(Collision2D collision) {
+    private void OnCollisionEnter2D(Collision2D collision) 
+    {
         Debug.Log("Hit object named: " + collision.gameObject.name);
 
         GetComponent<Animator>().SetBool("jumping", false);
         inAir = false;
 
-        if (collision.gameObject.CompareTag("Enemy")) {
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
 
-            if (rb.velocity.y < 0) {
+            if (rb.velocity.y < 0)
+            {
                 Destroy(collision.gameObject);
                 rb.velocity = new Vector2(rb.velocity.x, jumpSpeed);
             }
-            else {
+            else
+            {
                 transform.position = respawnPos;
             }
+        }
+
+        if (collision.gameObject.CompareTag("Enemy")) 
+        {
+            playerHealth.TakeDamage(1);
         }
     }
 }
