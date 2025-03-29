@@ -4,15 +4,27 @@ using UnityEngine;
 
 public class Health : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public int maxHealth = 3;
+    private int health;
+    public PlayerInterface playerInterface;
+    private void Start()
     {
-        
+        health = maxHealth; 
     }
-
-    // Update is called once per frame
-    void Update()
+    public void TakeDamage(int damage)
     {
-        
+        health -= damage;
+        if (playerInterface != null)
+        {
+            playerInterface.UpdateHealthDisplay(health);
+        }
+
+        if (health <= 0)
+        {
+            this.transform.position = Vector2.zero;
+            health = maxHealth;
+            playerInterface.UpdateHealthDisplay(health);
+        }
     }
 }
+
