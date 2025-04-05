@@ -7,12 +7,6 @@ public class PlayerAttack : MonoBehaviour
     public Transform melleeCheck;
     public LayerMask enemyLayer;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
     // Update is called once per frame
     void Update()
     {

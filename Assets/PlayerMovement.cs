@@ -23,18 +23,33 @@ public class PlayerMovement : MonoBehaviour
     {
         Vector2 movement = rb.velocity;
 
+        GetComponent<Animator>().SetBool("running", false);
+
         if (Input.GetKey(KeyCode.RightArrow)) {
             movement.x = moveSpeed;
+            GetComponent<Animator>().SetBool("running", true);
+
+            GetComponent<SpriteRenderer>().flipX = false;
         }
         else if (Input.GetKey(KeyCode.LeftArrow)) {
             movement.x = -moveSpeed;
+            GetComponent<Animator>().SetBool("running", true);
+
+            GetComponent<SpriteRenderer>().flipX = true;
         }
         else {
             movement.x = 0;
         }
 
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            GetComponent<Animator>().SetBool("attack", true);
+        }
+
         if (Input.GetKeyDown(KeyCode.Space) && rb.velocity.y == 0) {
             movement.y = jumpSpeed;
+            GetComponent<Animator>().SetBool("jumping", true);
+
         }
 
         rb.velocity = movement;
@@ -42,6 +57,8 @@ public class PlayerMovement : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision) {
         Debug.Log("Hit object named: " + collision.gameObject.name);
+
+        GetComponent<Animator>().SetBool("jumping", false);
 
         if (collision.gameObject.CompareTag("Enemy")) 
         {
